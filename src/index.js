@@ -309,7 +309,7 @@ class Email {
       ...options
     };
 
-    let { template, message, locals } = options;
+    let { template, message, locals, headers } = options;
 
     const attachments =
       message.attachments || this.config.message.attachments || [];
@@ -347,6 +347,9 @@ class Email {
       this.config.transport = nodemailer.createTransport({
         jsonTransport: true
       });
+    }
+    if(headers){
+      message.headers = headers;
     }
 
     const res = await this.config.transport.sendMail(message);
